@@ -95,47 +95,68 @@ if "%ENGINE_VERSION%"=="0.7.3" goto set_073
 REM Librerias version 0.6.3
 haxelib set flixel 5.2.2 >nul
 haxelib set flixel-addons 3.0.2 >nul
+haxelib set flixel-demos 2.9.0 >nul
+haxelib set flixel-templates 2.6.6 >nul
 haxelib set flixel-tools 1.5.1 >nul
 haxelib set flixel-ui 2.5.0 >nul
-haxelib set flxanimate 3.0.4 >nul
+haxelib git flxanimate https://github.com/ShadowMario/flxanimate.git dev >nul
 haxelib set hscript 2.5.0 >nul
-haxelib set openfl 9.2.1 >nul
+haxelib git hxCodec https://github.com/polybiusproxy/hxCodec.git >nul
+haxelib set lime-samples 7.0.0 >nul
 haxelib set lime 8.0.1 >nul
-haxelib set actuate 1.8.9 >nul
+haxelib git linc_luajit https://github.com/superpowers04/linc_luajit.git >nul
+haxelib set openfl 9.2.1 >nul
+haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git >nul
 
-echo Estableciendo linc_luajit desde Git...
-haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
-
-echo Estableciendo discord_rpc desde Git...
-haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git
 goto done
 
 :set_073
-REM Librerias version 0.7.3
-haxelib set flixel 5.6.1 >nul
-haxelib set flixel-addons 3.2.2 >nul
+REM Librerias version 0.7.3 - Actualizadas desde el enlace
+haxelib set flixel 5.5.0 >nul
+haxelib set flixel-addons 3.2.1 >nul
 haxelib set flixel-tools 1.5.1 >nul
-haxelib set openfl 9.3.3 >nul
-haxelib set lime 8.1.2 >nul
-haxelib set actuate 1.8.9 >nul
+haxelib set flixel-ui 2.5.0 >nul
+haxelib git flxanimate https://github.com/ShadowMario/flxanimate.git dev >nul
+haxelib git hxCodec https://github.com/polybiusproxy/hxCodec.git >nul
+haxelib set hxcpp-debug-server 1.2.4 >nul
+haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc.git >nul
+haxelib set lime 8.0.1 >nul
+haxelib git linc_luajit https://github.com/superpowers04/linc_luajit.git >nul
+haxelib set openfl 9.3.2 >nul
 haxelib set tjson 1.4.0 >nul
-haxelib set hxvlc 1.9.2 >nul
 
-echo Estableciendo flxanimate desde Git...
-haxelib git flxanimate https://github.com/ShadowMario/flxanimate.git
+REM Descomprimir el archivo ZIP SScript-8,1,6.zip en la carpeta de haxelib
+echo Descomprimiendo SScript desde el archivo ZIP...
 
-echo Estableciendo linc_luajit desde Git...
-haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
+set ZIP_FILE=SScript-8,1,6.zip
+set EXTRACT_DIR=%USERPROFILE%\Documents\Haxe\haxelib\SScript
 
-echo Estableciendo funkin.vis desde Git...
-haxelib git funkin-vis https://github.com/ShadowMario/funkin-vis
+REM Comprobar si el archivo ZIP existe
+if not exist "%ZIP_FILE%" (
+    echo ERROR: El archivo ZIP %ZIP_FILE% no se encuentra en la carpeta.
+    pause
+    exit /b
+)
 
-echo Estableciendo hxdiscord_rpc desde Git...
-haxelib git grig https://github.com/GrigGameAudio/grig
+REM Crear la carpeta de destino si no existe
+if not exist "%EXTRACT_DIR%" (
+    echo Creando la carpeta de destino: %EXTRACT_DIR%...
+    mkdir "%EXTRACT_DIR%"
+)
 
-echo Estableciendo grig.audio desde Git...
-haxelib git grig https://github.com/GrigGameAudio/grig
+REM Descomprimir el archivo ZIP en la carpeta correcta
+echo Descomprimiendo el archivo ZIP en %EXTRACT_DIR%...
+powershell -Command "Expand-Archive -Path '%ZIP_FILE%' -DestinationPath '%EXTRACT_DIR%' -Force"
 
+if errorlevel 1 (
+    echo ERROR: Fallo al descomprimir el archivo ZIP.
+    pause
+    exit /b
+)
+
+echo Archivo ZIP descomprimido correctamente.
+
+haxelib set SScript 8.1.6 >nul
 goto done
 
 :done
